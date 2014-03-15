@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  GeoManager
+
+  Created by shoujun xue on 3/8/14.
+  Copyright (c) 2014 shoujun xue. All rights reserved.
+*/
+"groupTeamTitle" = "工作队组选择";
+"coalSeamName" = "煤层";
+"notification" = "通知";
+"submitSuccessful" = "提交成功";
+"reInsertCard" = "重新填写";
+"logout" = "退出";
+
+"alertNotGetGroup" = "无法取得工作队组列表，请联系管理员。(%d)";
+"alertNotInputPassword" = "请输入口令";
+"alertLoading" = "正在发送请求，请稍后";
+"alertLoginFail" = "登录失败，请联系管理员。(%d)";
+"alertConfigWrong" = "配置信息取得错误，请联系管理员。(%@)";
+"submitInfoWrong" = "提交信息有误。(%@)";
+"submitInfoNull" = "请提交完整信息。(%@)";
+"alertSubmitFailed" = "提交失败。(%d)";

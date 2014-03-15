@@ -1,0 +1,108 @@
+
+/* Class = "IBUILabel"; text = "煤层及顶底板柱状图"; ObjectID = "2db-0j-TMb"; */
+"2db-0j-TMb.text" = "煤层及顶底板柱状图";
+
+/* Class = "IBUILabel"; text = "掌子面煤岩层、瓦斯、涌水有无变化"; ObjectID = "7ia-5a-525"; */
+"7ia-5a-525.text" = "掌子面煤岩层、瓦斯、涌水有无变化";
+
+/* Class = "IBUIButton"; normalTitle = "取消"; ObjectID = "AR6-93-3bl"; */
+"AR6-93-3bl.normalTitle" = "取消";
+
+/* Class = "IBUILabel"; text = "工作面地质信息卡"; ObjectID = "AlF-yp-9vn"; */
+"AlF-yp-9vn.text" = "工作面地质信息卡";
+
+/* Class = "IBUIButton"; normalTitle = "Edit"; ObjectID = "Bsn-fe-vof"; */
+"Bsn-fe-vof.normalTitle" = "Edit";
+
+/* Class = "IBUILabel"; text = "观测点位置"; ObjectID = "Cgu-6l-zj5"; */
+"Cgu-6l-zj5.text" = "观测点位置";
+
+/* Class = "IBUITextField"; text = "刘德华"; ObjectID = "EN9-HL-UiS"; */
+"EN9-HL-UiS.text" = "刘德华";
+
+/* Class = "IBUILabel"; text = "巷道名称"; ObjectID = "EsZ-m3-O1f"; */
+"EsZ-m3-O1f.text" = "巷道名称";
+
+/* Class = "IBUIButton"; normalTitle = "Cancel"; ObjectID = "F4r-Gd-4BG"; */
+"F4r-Gd-4BG.normalTitle" = "Cancel";
+
+/* Class = "IBUITextField"; text = "无异常"; ObjectID = "FxB-zQ-aPT"; */
+"FxB-zQ-aPT.text" = "无异常";
+
+/* Class = "IBUITextField"; text = "2014Test"; ObjectID = "HwQ-74-3eg"; */
+"HwQ-74-3eg.text" = "2014Test";
+
+/* Class = "IBUILabel"; text = "米"; ObjectID = "I0t-s6-7TS"; */
+"I0t-s6-7TS.text" = "米";
+
+/* Class = "IBUILabel"; text = "综掘队"; ObjectID = "M7N-wD-ycu"; */
+"M7N-wD-ycu.text" = "综掘队";
+
+/* Class = "IBUIBarButtonItem"; title = "返回"; ObjectID = "SA6-nA-3W6"; */
+"SA6-nA-3W6.title" = "返回";
+
+/* Class = "IBUIButton"; normalTitle = "Button"; ObjectID = "SlT-nN-Zwq"; */
+"SlT-nN-Zwq.normalTitle" = "Button";
+
+/* Class = "IBUILabel"; text = "超前探眼情况"; ObjectID = "UNq-Cx-Jkj"; */
+"UNq-Cx-Jkj.text" = "超前探眼情况";
+
+/* Class = "IBUILabel"; text = "队"; ObjectID = "V81-cc-4Ya"; */
+"V81-cc-4Ya.text" = "队";
+
+/* Class = "IBUIButton"; normalTitle = "登录"; ObjectID = "WU1-dx-GhZ"; */
+"WU1-dx-GhZ.normalTitle" = "登录";
+
+/* Class = "IBUITextField"; placeholder = "请输入开始日期"; ObjectID = "XGS-1E-2Q3"; */
+"XGS-1E-2Q3.placeholder" = "请输入开始日期";
+
+/* Class = "IBUIButton"; normalTitle = "提交"; ObjectID = "bLT-WD-sAJ"; */
+"bLT-WD-sAJ.normalTitle" = "提交";
+
+/* Class = "IBUIButton"; normalTitle = "Submit"; ObjectID = "bTG-DK-ATQ"; */
+"bTG-DK-ATQ.normalTitle" = "Submit";
+
+/* Class = "IBUILabel"; text = "施工队组："; ObjectID = "e1E-ae-166"; */
+"e1E-ae-166.text" = "施工队组：";
+
+/* Class = "IBUILabel"; text = "汇报人："; ObjectID = "eAz-0E-LY8"; */
+"eAz-0E-LY8.text" = "汇报人：";
+
+/* Class = "IBUILabel"; text = "顶板锚杆及锚素施工情况"; ObjectID = "eNg-Kq-FQd"; */
+"eNg-Kq-FQd.text" = "顶板锚杆及锚素施工情况";
+
+/* Class = "IBUIBarButtonItem"; title = "返回"; ObjectID = "ec2-DJ-gW8"; */
+"ec2-DJ-gW8.title" = "返回";
+
+/* Class = "IBUITextField"; text = "无异常"; ObjectID = "eei-zR-vHL"; */
+"eei-zR-vHL.text" = "无异常";
+
+/* Class = "IBUITextField"; text = "无异常"; ObjectID = "gwZ-kO-TdV"; */
+"gwZ-kO-TdV.text" = "无异常";
+
+/* Class = "IBUILabel"; text = "点前"; ObjectID = "nUH-lk-Qk1"; */
+"nUH-lk-Qk1.text" = "点前";
+
+/* Class = "IBUITextField"; placeholder = "请输入密码"; ObjectID = "oVS-x1-LTN"; */
+"oVS-x1-LTN.placeholder" = "请输入密码";
+
+/* Class = "IBUITextField"; placeholder = "请输入结束日期"; ObjectID = "ruN-5r-tSq"; */
+"ruN-5r-tSq.placeholder" = "请输入结束日期";
+
+/* Class = "IBUILabel"; text = "2014年02月25日"; ObjectID = "so0-Kc-sYl"; */
+"so0-Kc-sYl.text" = "2014年02月25日";
+
+/* Class = "IBUITextField"; text = "28111切眼探巷"; ObjectID = "tMJ-05-8cf"; */
+"tMJ-05-8cf.text" = "28111切眼探巷";
+
+/* Class = "IBUITextField"; text = "早"; ObjectID = "tr1-n5-3A7"; */
+"tr1-n5-3A7.text" = "早";
+
+/* Class = "IBUITextField"; text = "8"; ObjectID = "xMj-Ra-XKk"; */
+"xMj-Ra-XKk.text" = "8";
+
+/* Class = "IBUILabel"; text = "煤岩层厚度"; ObjectID = "z3X-Im-mUh"; */
+"z3X-Im-mUh.text" = "煤岩层厚度";
+
+/* Class = "IBUILabel"; text = "班"; ObjectID = "zjc-DU-u07"; */
+"zjc-DU-u07.text" = "班";
