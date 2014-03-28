@@ -10,6 +10,7 @@
 #import "SelectionCell.h"
 #import "TLConstantClass.h"
 #import "NumberKeyboard.h"
+#import "TLAlertView.h"
 
 @implementation TLCoalSeamCell
 
@@ -63,6 +64,14 @@
 #pragma mark - TextFieldDelegate
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    // 必须输入煤层
+    if (textField.tag == TAG_COAL_SEAM_VALUE_TEXTFIELD) {
+        if (_textFieldCoalSeam.text == Nil || _textFieldCoalSeam.text.length == 0) {
+            TLAlertView *alertView = [[TLAlertView alloc] init];
+            [alertView showFadeoutViewWithMessage:NSLocalizedString(@"alertInputCoalSeamFirst", Nil)];
+            return NO;
+        }
+    }
     if (_delegate && [_delegate respondsToSelector:@selector(textField:ShouldBeginEditingWithIndexPath:)]) {
         [_delegate textField:textField ShouldBeginEditingWithIndexPath:_indexPath];
     }
@@ -105,8 +114,4 @@
     self.state = state;
 }
 
-//-(void)dealloc
-//{
-//    [_textFieldThick resignFirstResponder];
-//}
 @end

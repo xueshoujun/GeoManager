@@ -21,12 +21,13 @@
                       K_OBSERVER_POINTS: @"观测点",
                       K_STRATUMS: @"煤岩层",
                       K_OBSERVER_INFO: @"观测情况",
-                      K_TEAM_MEMBERS: @"汇报人"};
+                      K_TEAM_MEMBERS: @"汇报人",
+                               K_TEAM:@"工作队组"};
     return infoDict;
 }
 -(NSArray *)coalSeamLevelArray
 {
-    NSArray *array = @[@"顶部", @"掌子面", @"底部"];
+    NSArray *array = @[@"顶板", @"掌子面", @"底板"];
     return array;
 }
 

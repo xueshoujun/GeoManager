@@ -29,6 +29,17 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rtH-XS-IUO">
+                                <rect key="frame" x="864" y="85" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" image="button_refresh.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="refreshTeamAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BIX-F5-cQ1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -40,6 +51,7 @@
                     </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="buttonRefresh" destination="rtH-XS-IUO" id="Afo-UA-iml"/>
                         <outlet property="labelTitle" destination="cKK-BI-upg" id="yMq-SP-ATX"/>
                         <outlet property="tableView" destination="g91-ov-n8j" id="Iqn-pQ-NxZ"/>
                         <segue destination="fc9-Lf-BZ1" kind="modal" identifier="PresentLoginView" modalPresentationStyle="formSheet" modalTransitionStyle="coverVertical" id="EEI-TU-qGb"/>
@@ -132,7 +144,7 @@
                         </userGuides>
                         <subviews>
                             <view contentMode="scaleToFill" id="YRz-Yh-NGe" userLabel="View-Title">
-                                <rect key="frame" x="40" y="46" width="944" height="70"/>
+                                <rect key="frame" x="40" y="39" width="944" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工作面地质信息卡" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AlF-yp-9vn">
@@ -176,13 +188,15 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="-20" maxX="0.0" maxY="20"/>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_submit_page.png" id="qjH-aZ-dvG">
-                                <rect key="frame" x="40" y="110" width="944" height="650"/>
+                                <rect key="frame" x="40" y="103" width="944" height="644"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="-20" maxX="0.0" maxY="20"/>
                             </imageView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="rkS-s4-J7r">
-                                <rect key="frame" x="40" y="110" width="944" height="640"/>
+                                <rect key="frame" x="40" y="103" width="944" height="684.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="HK5-H6-2zO" userLabel="View-巷道名称">
@@ -264,7 +278,7 @@
                                         <rect key="frame" x="5" y="109" width="515" height="207"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="煤岩层厚度" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z3X-Im-mUh">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 煤(岩)层厚度" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="z3X-Im-mUh">
                                                 <rect key="frame" x="65" y="0.0" width="129" height="202"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -295,8 +309,8 @@
                                         <rect key="frame" x="5" y="317" width="515" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="顶板锚杆及锚锁施工情况" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eNg-Kq-FQd">
-                                                <rect key="frame" x="60" y="0.0" width="160" height="52"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="顶板锚杆及锚索施工情况" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eNg-Kq-FQd">
+                                                <rect key="frame" x="60" y="0.0" width="160" height="53"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -413,15 +427,17 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator_line_v.png" id="Eq6-hM-PRe">
-                                        <rect key="frame" x="544" y="68" width="27" height="392"/>
+                                        <rect key="frame" x="544" y="68" width="27" height="387"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="-20" maxX="0.0" maxY="20"/>
                             </scrollView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SlT-nN-Zwq">
-                                <rect key="frame" x="980" y="5" width="56" height="43"/>
+                                <rect key="frame" x="980" y="-2" width="56" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="-20" maxX="0.0" maxY="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" image="button_menu.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -497,7 +513,7 @@
             <objects>
                 <viewController id="yDK-KA-zXD" customClass="TLSearchViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YrS-Jv-S7n">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="767.99999999999989"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView hidden="YES" contentMode="scaleToFill" id="MQd-jk-o9K">
@@ -527,11 +543,11 @@
             <objects>
                 <viewController id="UuF-Nh-0Jy" customClass="TLNotificationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aZ1-uA-JFZ">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="767.99999999999989"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView hidden="YES" contentMode="scaleToFill" id="luH-2I-0e8">
-                                <rect key="frame" x="0.0" y="67.999999999999943" width="1024" height="700"/>
+                                <rect key="frame" x="0.0" y="68" width="1024" height="700"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
@@ -614,7 +630,7 @@
             <objects>
                 <tableViewController id="X1I-86-lin" customClass="TLMenuViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uSt-eJ-4EN">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="680"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -680,12 +696,13 @@
         <image name="bg_submit_page.png" width="946" height="569"/>
         <image name="button_login.png" width="111" height="39"/>
         <image name="button_menu.png" width="56" height="43"/>
+        <image name="button_refresh.png" width="40" height="41"/>
         <image name="button_submit.png" width="272" height="40"/>
         <image name="separator_line_v.png" width="2" height="360"/>
         <image name="text_password.png" width="229" height="36"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
+        <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>

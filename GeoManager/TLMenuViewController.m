@@ -11,6 +11,7 @@
 
 @interface TLMenuViewController ()
 @property(strong, nonatomic)NSMutableArray *dataSource;
+@property(strong, nonatomic)NSMutableArray *iconViews;
 @end
 
 @implementation TLMenuViewController
@@ -27,6 +28,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.tableView setScrollEnabled:NO];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     [self initTableData];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -34,7 +39,8 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_menu"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_menu_repeat"]];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,7 +79,34 @@
     [_dataSource addObject:searchRowDict];
     [_dataSource addObject:notificationRowDict];
     [_dataSource addObject:logoutRowDict];
+    
+    self.iconViews = [NSMutableArray new];
+    CGRect iconFrame = CGRectMake(70, 10, 40, 40);
+    UIImageView *homePageIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_homepage"]];
+    homePageIcon.frame = iconFrame;
+    UIImageView *notificationIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_notification"]];
+    notificationIcon.frame = iconFrame;
+    UIImageView *searchIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_search"]];
+    searchIcon.frame = iconFrame;
+    [_iconViews addObject:homePageIcon];
+    [_iconViews addObject:notificationIcon];
+    [_iconViews addObject:searchIcon];
 }
+#pragma mark - self action
+-(void)backAction
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(dismisPopoverMenuView:)]) {
+        [_delegate dismisPopoverMenuView:POPOVER_MAIN_VIEW];
+    }
+}
+
+-(void)logoutAction
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(dismisPopoverMenuView:)]) {
+        [_delegate dismisPopoverMenuView:POPOVER_LOGOUT];
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -103,6 +136,17 @@
     
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.text = _dataSource[indexPath.row][K_NAME];
+    if (indexPath.row < _dataSource.count -1) {
+        [cell addSubview:_iconViews[indexPath.row]];
+    }else {
+        UIButton *logoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [logoutButton setImage:[UIImage imageNamed:@"logoutButton"] forState:UIControlStateNormal];
+        logoutButton.frame = CGRectMake(20, 120, 270, 40);
+        [logoutButton addTarget:self action:@selector(logoutAction) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:logoutButton];
+        cell.textLabel.text = @"";
+    }
+    
     return cell;
 }
 #pragma mark Table view delegate
@@ -111,8 +155,16 @@
     UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 80)];
     header.text = @"功能菜单";
     header.font = [UIFont systemFontOfSize:24];
+    header.textColor = COLOR_BLUE_TEXT;
     header.textAlignment = NSTextAlignmentCenter;
-    header.backgroundColor = COLOR_BLUE_BG;//[UIColor grayColor];
+    header.backgroundColor = [UIColor clearColor];//COLOR_BLUE_BG;//[UIColor grayColor];
+    UIButton *buttonBack = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect backButtonFrame = CGRectMake(20, 18, 72, 44);
+    [buttonBack setImage:[UIImage imageNamed:@"backButton"] forState:UIControlStateNormal];
+    buttonBack.frame = backButtonFrame;
+    [buttonBack addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [header addSubview:buttonBack];
+    [header setUserInteractionEnabled:YES];
     return header;
 }
 
@@ -123,7 +175,11 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    if (indexPath.row < _dataSource.count -1) {
+        return 60;
+    }else {
+        return 200;
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

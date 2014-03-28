@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface TLDataCenter : NSObject
-
+@property(strong, nonatomic)NSString *accessToken;
 @property(strong, nonatomic)NSMutableArray *coalSeamData;
 -(NSDictionary *)infoNameInfoDict;
 -(NSArray *)coalSeamLevelArray;

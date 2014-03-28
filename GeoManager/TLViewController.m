@@ -47,6 +47,10 @@
     [[TLServiceRequest shareInstance] groupRequest:nil];
     [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:2];
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [[TLDataCenter shareInstance] setAccessToken:@""];
+}
 
 -(void)showLoadingView
 {
@@ -142,6 +146,7 @@
 #pragma mark - login view controller delegate
 -(void)loginSucesse:(NSDictionary *)loginResp
 {
+    [TLDataCenter shareInstance].accessToken = loginResp[K_ACCESS_TOKEN];
     self.configItermDict = loginResp;
     if (_configItermDict) {
         [self performSegueWithIdentifier:@"PushSubmitPage" sender:nil];
@@ -206,6 +211,11 @@
     return 70;
 }
 #pragma mark - self method
+- (IBAction)refreshTeamAction:(id)sender {
+    [[TLServiceRequest shareInstance] groupRequest:nil];
+    [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:2];
+}
+
 -(void) teamButtonAction:(UIButton *)button
 {
     self.loginTeamDict = Nil;
@@ -217,6 +227,7 @@
 
 - (void)convertGourpsDataToTableData
 {
+    [_tableDataArray removeAllObjects];
     for (NSDictionary *group in _groupsArray) {
         // data in one row
         self.groupRowsArray = [NSMutableArray new];

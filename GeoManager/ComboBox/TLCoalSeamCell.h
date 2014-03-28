@@ -13,6 +13,7 @@
 -(void)textField:(UITextField *)textField DidEndEditingWithIndexPath:(NSIndexPath *)indexPath;
 @end
 
+
 @interface TLCoalSeamCell : UITableViewCell<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textFieldCoalSeam;
 @property (weak, nonatomic) IBOutlet UILabel *lablethickness;

@@ -8,6 +8,7 @@
 
 #import "TLSelectTableView.h"
 #import "TLConstantClass.h"
+#import "TLDataCenter.h"
 
 @interface TLSelectTableView ()
 
@@ -58,6 +59,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+     NSDictionary *infoNameDict = [[TLDataCenter shareInstance] infoNameInfoDict];
+    if ([infoNameDict[K_STRATUMS] isEqualToString: _titleName] ) {
+        return (_dataSource == Nil)?0:_dataSource.count+1;
+    }
     return (_dataSource == Nil)?0:_dataSource.count;
 }
 
@@ -68,11 +73,16 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    // Configure the cell...
-    if ([_dataSource[indexPath.row][K_NAME] isEqual:[NSNull null]]) {
-        cell.textLabel.text = @"";
+    if (indexPath.row < _dataSource.count) {
+        // Configure the cell...
+        if ([_dataSource[indexPath.row][K_NAME] isEqual:[NSNull null]]) {
+            cell.textLabel.text = @"";
+        } else {
+            cell.textLabel.text = _dataSource[indexPath.row][K_NAME];
+        }
     } else {
-        cell.textLabel.text = _dataSource[indexPath.row][K_NAME];
+        cell.textLabel.textColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+        cell.textLabel.text = @"空值";
     }
     
     return cell;
@@ -81,9 +91,15 @@
 #pragma mark - Table View Delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"selected row %@", _dataSource[indexPath.row]);
-    if (_didSelectedAtIndex) {
-        _didSelectedAtIndex(indexPath);
+    if (indexPath.row < _dataSource.count) {
+        NSLog(@"selected row %@", _dataSource[indexPath.row]);
+        if (_didSelectedAtIndex) {
+            _didSelectedAtIndex(indexPath);
+        }
+    } else {
+        if (_didSelectedAtIndex) {
+            _didSelectedAtIndex(nil);
+        }
     }
     [self dismissViewControllerAnimated:YES completion:Nil];
 }

@@ -20,6 +20,8 @@
 #define K_TEAMS     @"teams"
 #define K_VALUE     @"value"
 #define K_PASSWORD  @"password"
+#define K_ACCESS_TOKEN      @"accessToken"
+
 
 #define K_GROUPS            @"groups"
 #define K_SERVER_TIME       @"serverTime"

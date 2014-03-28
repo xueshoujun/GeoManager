@@ -11,6 +11,7 @@
 #import "TLConstantClass.h"
 #import "AFNetworking.h"
 #import "TLAlertView.h"
+#import "TLDataCenter.h"
 
 @implementation TLServiceRequest
 
@@ -25,10 +26,10 @@
     AFHTTPRequestOperation *httpRequest = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     [httpRequest setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 返回结果
-//        NSDictionary *groupDict = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSDictionary *groupDict = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
         
         // MOCK
-        NSDictionary *groupDict = [self groupMockResponse];
+//        NSDictionary *groupDict = [self groupMockResponse];
         
         if (_startDelegate && [_startDelegate respondsToSelector:@selector(groupResponse:)]) {
             [_startDelegate groupResponse:groupDict];
@@ -66,10 +67,20 @@
 -(void)loginRequest:(NSDictionary *)loginRequest
 {
     NSLog(@"loginRequest %@", loginRequest);
-    NSDictionary *requestDict = @{K_TEAM_ID:[loginRequest[K_ID] stringValue], K_PASSWORD:loginRequest[K_PASSWORD]};
+    NSString *teamId = @"";
+    if ([loginRequest[K_ID] isKindOfClass:[NSString class]]) {
+        teamId = loginRequest[K_ID];
+    }else {
+        teamId = [loginRequest[K_ID] stringValue];
+    }
+    // TODO:test teamid = adming start
+//    teamId = @"admin";
+    // TODO:test teamid = adming end
+    NSDictionary *requestDict = @{K_TEAM_ID:teamId, K_PASSWORD:loginRequest[K_PASSWORD]};
     NSURL *url = [NSURL URLWithString:URL_REQUEST_LOGIN];
     AFHTTPClient *httpClinet = [AFHTTPClient clientWithBaseURL:url];
 //    [httpClinet setParameterEncoding:AFJSONParameterEncoding];
+    // application/x-www-form-urlencoded
     NSMutableURLRequest *urlRequest = [httpClinet requestWithMethod:@"POST" path:@"/mtp/team/login" parameters:requestDict];
     
     // AFHTTPRequest
@@ -83,15 +94,21 @@
         }
         NSLog(@"login resultDict %@", resultDict);
         
-        
+        NSLog(@"requst hearder %@", operation.request.allHTTPHeaderFields);
+        NSLog(@"requst string %@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"loginRequest failure URL : %@", operation.request.URL.absoluteString);
         NSLog(@"loginRequest failure error : %@", error.debugDescription);
         NSLog(@"requst hearder %@", operation.request.allHTTPHeaderFields);
         NSLog(@"requst string %@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+        NSLog(@"response string %@", operation.responseString);
         // 返回失败的结果
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alertLoginFail", nil), error.code];
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alertLoginFail", nil), operation.response.statusCode];
+        if (401 == operation.response.statusCode) {
+            message = NSLocalizedString(@"alertLoginFail_Password", Nil);
+        }
         NSDictionary *resultDict = @{K_REQUEST_RESULT: K_REQUEST_RESULT_FAILURE, K_REQUEST_RESULT_MESSAGE: message};
+//        NSDictionary *resultDict = [self loginMockResponse];
         // 回调返回结果
         if (_loginDelegate && [_loginDelegate respondsToSelector:@selector(loginResponse:)]) {
             [_loginDelegate loginResponse:resultDict];
@@ -111,6 +128,10 @@
     NSLog(@"submitRequest %@", requestDict);
     NSURL *url = [NSURL URLWithString:URL_REQUEST_SUBMIT];
     AFHTTPClient *httpClinet = [AFHTTPClient clientWithBaseURL:url];
+    [httpClinet clearAuthorizationHeader];
+    [httpClinet setAuthorizationHeaderWithToken:[TLDataCenter shareInstance].accessToken];
+    // Authorization:{accessToken}
+    [httpClinet setDefaultHeader:@"Authorization" value:[TLDataCenter shareInstance].accessToken];
     [httpClinet setParameterEncoding:AFJSONParameterEncoding];
     NSMutableURLRequest *urlRequest = [httpClinet requestWithMethod:@"POST" path:@"" parameters:requestDict];
     AFHTTPRequestOperation *httpRequest = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
@@ -187,7 +208,7 @@
     "\"accessToken\":\"qweiurpqewuripqwrue\","
     "\"team\":{\"id\":\"1\",\"name\":\"综掘一队\",\"members\":[{\"id\":\"11\",\"name\":\"张三\"},{\"id\":\"12\",\"name\":\"李四\"}]},"
     "\"shifts\":[{\"id\":\"1\",\"name\":\"早班\"},{\"id\":\"2\",\"name\":\"中班\"},{\"id\":\"3\",\"name\":\"晚班\"}],"
-    "\"workingSurfaces\":[{\"id\":\"1\","
+    "\"surfaces\":[{\"id\":\"1\","
                         "\"name\":\"28111切眼\", "
                      "\"tunnels\":[{\"id\":\"12\","
                                     "\"name\":\"28111切眼左\", "

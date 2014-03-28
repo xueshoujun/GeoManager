@@ -69,7 +69,7 @@
 "eAz-0E-LY8.text" = "汇报人：";
 
 /* Class = "IBUILabel"; text = "顶板锚杆及锚素施工情况"; ObjectID = "eNg-Kq-FQd"; */
-"eNg-Kq-FQd.text" = "顶板锚杆及锚素施工情况";
+"eNg-Kq-FQd.text" = "顶板锚杆及锚索施工情况";
 
 /* Class = "IBUIBarButtonItem"; title = "返回"; ObjectID = "ec2-DJ-gW8"; */
 "ec2-DJ-gW8.title" = "返回";

@@ -156,11 +156,17 @@
 -(void)linkageValueChangedTextField:(UITextField *)textField
 {
     if (textField == _textFieldTitle) {
-        _submitDict[K_SURFACE_ID] = _selectedWorkingSuface[K_ID];
+        _submitDict[K_SURFACE_ID] = (_selectedWorkingSuface[K_ID]==nil?@"":_selectedWorkingSuface[K_ID]);
         
         if (_selectedWorkingSuface[K_TUNNELS] == nil ||
             [_selectedWorkingSuface[K_TUNNELS] isEqual:[NSNull null]]) {
-            _textFieldTitle.text = _selectedWorkingSuface[K_NAME];
+            if (_selectedWorkingSuface[K_NAME]==nil ||
+                [_selectedWorkingSuface[K_NAME] length]==0) {
+                _textFieldTitle.text = @"_____";
+            }else {
+                _textFieldTitle.text = _selectedWorkingSuface[K_NAME];
+            }
+            
             _textFieldTunnel.text = @"";
             _textFieldObserverPoint.text = @"";
             return;
@@ -169,8 +175,12 @@
         self.selectedPoint = _selectedTunnel[K_OBSERVER_POINTS][0];
         _textFieldTitle.text = _selectedWorkingSuface[K_NAME];
         _textFieldTunnel.text = _selectedTunnel[K_NAME];
+        _submitDict[K_TUNNEL_ID] = (_selectedTunnel[K_ID]==nil?@"":_selectedTunnel[K_ID]);
+        _submitDict[K_POINT_ID] = (_selectedPoint[K_ID]==nil?@"":_selectedPoint[K_ID]);
         _textFieldObserverPoint.text = _selectedPoint[K_NAME];
     } else if (textField == _textFieldTunnel) {
+        
+        _submitDict[K_TUNNEL_ID] = (_selectedTunnel[K_ID]==nil?@"":_selectedTunnel[K_ID]);
         if (_selectedTunnel[K_OBSERVER_POINTS] == nil ||
             [_selectedTunnel[K_OBSERVER_POINTS] isEqual:[NSNull null]]) {
             _textFieldTunnel.text = _selectedTunnel[K_NAME];
@@ -338,7 +348,6 @@
         checkOK = NO;
         return checkOK;
     }
-    // coal seam
     
     // reporter
     if (_textFieldReporter.text == nil || _textFieldReporter.text.length == 0) {
@@ -349,7 +358,7 @@
         return checkOK;
     }
 
-    
+    // coal seam
     if ([TLDataCenter shareInstance].coalSeamData &&
         [TLDataCenter shareInstance].coalSeamData.count == 3) {
         [_roofArray setArray:[TLDataCenter shareInstance].coalSeamData[0]];
@@ -380,18 +389,29 @@
             [segue.destinationViewController setValue:_configItemsDict[K_WORKING_SUFACES] forKey:PROPERTY_DATA_SOURCE];
             [segue.destinationViewController setValue:infoNameDict[K_WORKING_SUFACES] forKey:PROPERTY_TITLE_NAME];
             [segue.destinationViewController setValue:^(NSIndexPath *indexPath){
-                if (![_submitDict[K_SURFACE_ID] isEqual:_configItemsDict[K_WORKING_SUFACES][indexPath.row][K_ID]] ) {
-                    self.selectedWorkingSuface = _configItemsDict[K_WORKING_SUFACES][indexPath.row];
+                if (indexPath == nil) {
+                    self.selectedWorkingSuface = [NSDictionary new];
                     [self linkageValueChangedTextField:sender];
+                } else {
+                    if (![_submitDict[K_SURFACE_ID] isEqual:_configItemsDict[K_WORKING_SUFACES][indexPath.row][K_ID]] ) {
+                        self.selectedWorkingSuface = _configItemsDict[K_WORKING_SUFACES][indexPath.row];
+                        [self linkageValueChangedTextField:sender];
+                    }
                 }
+                
             } forKey:PROPERTY_SELECTED];
         }else if (sender == _textFieldShift){
             [segue.destinationViewController setValue:_configItemsDict[K_SHIFTS] forKey:PROPERTY_DATA_SOURCE];
             [segue.destinationViewController setValue:infoNameDict[K_SHIFTS] forKey:PROPERTY_TITLE_NAME];
             [segue.destinationViewController setValue:^(NSIndexPath *indexPath){
-                if (![_submitDict[K_SHIFT_ID] isEqual:_configItemsDict[K_SHIFTS][indexPath.row][K_ID]] ) {
-                    _textFieldShift.text = _configItemsDict[K_SHIFTS][indexPath.row][K_NAME];
-                    _submitDict[K_SHIFT_ID] = _configItemsDict[K_SHIFTS][indexPath.row][K_ID];
+                if (indexPath == nil) {
+                    _textFieldShift.text = @"____";
+                    _submitDict[K_SHIFT_ID] = @"";
+                }else {
+                    if (![_submitDict[K_SHIFT_ID] isEqual:_configItemsDict[K_SHIFTS][indexPath.row][K_ID]] ) {
+                        _textFieldShift.text = _configItemsDict[K_SHIFTS][indexPath.row][K_NAME];
+                        _submitDict[K_SHIFT_ID] = _configItemsDict[K_SHIFTS][indexPath.row][K_ID];
+                    }
                 }
             } forKey:PROPERTY_SELECTED];
             
@@ -399,24 +419,32 @@
             [segue.destinationViewController setValue:_selectedWorkingSuface[K_TUNNELS] forKey:PROPERTY_DATA_SOURCE];
             [segue.destinationViewController setValue:infoNameDict[K_TUNNELS] forKey:PROPERTY_TITLE_NAME];
             [segue.destinationViewController setValue:^(NSIndexPath *indexPath){
-                if (_selectedWorkingSuface[K_TUNNELS] == nil ||
-                    [ _selectedWorkingSuface[K_TUNNELS] isEqual:[NSNull null]]) {
-                    
-                    // tunnels is null
-                    
-                } else  if (![_submitDict[K_TUNNEL_ID] isEqual:_selectedWorkingSuface[K_TUNNELS][indexPath.row][K_ID]] ) {
-                    self.selectedTunnel = _selectedWorkingSuface[K_TUNNELS][indexPath.row];
+                if (indexPath == nil) {
+                    self.selectedTunnel = [NSDictionary new];
                     [self linkageValueChangedTextField:sender];
+                }else{
+                    if (_selectedWorkingSuface[K_TUNNELS] == nil ||
+                        [ _selectedWorkingSuface[K_TUNNELS] isEqual:[NSNull null]]) {
+                        // tunnels is null
+                        
+                    } else  if (![_submitDict[K_TUNNEL_ID] isEqual:_selectedWorkingSuface[K_TUNNELS][indexPath.row][K_ID]] ) {
+                        self.selectedTunnel = _selectedWorkingSuface[K_TUNNELS][indexPath.row];
+                        [self linkageValueChangedTextField:sender];
+                    }
                 }
             } forKey:PROPERTY_SELECTED];
         }else if (sender == _textFieldObserverPoint){
             [segue.destinationViewController setValue:_selectedTunnel[K_OBSERVER_POINTS] forKey:PROPERTY_DATA_SOURCE];
             [segue.destinationViewController setValue:infoNameDict[K_OBSERVER_POINTS] forKey:PROPERTY_TITLE_NAME];
             [segue.destinationViewController setValue:^(NSIndexPath *indexPath){
-                if (![_submitDict[K_POINT_ID] isEqual:_selectedTunnel[K_OBSERVER_POINTS][indexPath.row][K_ID]] ) {
-                    _textFieldObserverPoint.text = _selectedTunnel[K_OBSERVER_POINTS][indexPath.row][K_NAME];
-                    _submitDict[K_POINT_ID] = _selectedTunnel[K_OBSERVER_POINTS][indexPath.row][K_ID];
-                    
+                if (indexPath == nil) {
+                    _textFieldObserverPoint.text = @"";
+                    _submitDict[K_POINT_ID] = @"";
+                } else {
+                    if (![_submitDict[K_POINT_ID] isEqual:_selectedTunnel[K_OBSERVER_POINTS][indexPath.row][K_ID]] ) {
+                        _textFieldObserverPoint.text = _selectedTunnel[K_OBSERVER_POINTS][indexPath.row][K_NAME];
+                        _submitDict[K_POINT_ID] = _selectedTunnel[K_OBSERVER_POINTS][indexPath.row][K_ID];
+                    }
                 }
             } forKey:PROPERTY_SELECTED];
         }else if (sender == _textfieldRoofAnchor){
@@ -463,17 +491,27 @@
             [segue.destinationViewController setValue:_configItemsDict[K_STRATUMS] forKey:PROPERTY_DATA_SOURCE];
             [segue.destinationViewController setValue:infoNameDict[K_STRATUMS] forKey:PROPERTY_TITLE_NAME];
             [segue.destinationViewController setValue:^(NSIndexPath *indexPath){
-                if (_textFieldCoalSeamCell !=nil && _selectedIndexPath !=nil) {
-                    _textFieldCoalSeamCell.text = _configItemsDict[K_STRATUMS][indexPath.row][K_NAME];
-                    [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_STRATUM_ID] = _configItemsDict[K_STRATUMS][indexPath.row][K_ID];
-                    [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_NAME] = _configItemsDict[K_STRATUMS][indexPath.row][K_NAME];
+                if (indexPath == nil) {
+                    _textFieldCoalSeamCell.text = @"";
+                    [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_STRATUM_ID] = @"";
+                    [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_NAME] = @"";
+                    [TLDataCenter shareInstance].coalSeamData[indexPath.section][indexPath.row][K_VALUE] = @"";
+                    
                     // draw graph
                     [self finishInputCoalSeamData];
-                    // reset clean
-                    self.textFieldCoalSeamCell = Nil;
-                    self.selectedIndexPath = nil;
+
+                } else {
+                    if (_textFieldCoalSeamCell !=nil && _selectedIndexPath !=nil) {
+                        _textFieldCoalSeamCell.text = _configItemsDict[K_STRATUMS][indexPath.row][K_NAME];
+                        [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_STRATUM_ID] = _configItemsDict[K_STRATUMS][indexPath.row][K_ID];
+                        [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_NAME] = _configItemsDict[K_STRATUMS][indexPath.row][K_NAME];
+                        // draw graph
+                        [self finishInputCoalSeamData];
+                        // reset clean
+                        self.textFieldCoalSeamCell = Nil;
+                        self.selectedIndexPath = nil;
+                    }
                 }
-                
             } forKey:PROPERTY_SELECTED];
         }
     } else if([segue.identifier isEqualToString:@"PopoverMenu"]) {
@@ -493,6 +531,8 @@
 }
 
 - (IBAction)submitAction:(id)sender {
+
+    NSLog(@"submit Dict %@", _submitDict);
     if (![self checkSubmit]) {
         return;
     }
@@ -689,8 +729,6 @@
             [tableView endUpdates];
         }
         
-        
-        
     } else if(editingStyle == UITableViewCellEditingStyleDelete) {
         TLCoalSeamCell *cell = (TLCoalSeamCell*)[tableView cellForRowAtIndexPath:indexPath];
         [cell.textFieldThick resignFirstResponder];
@@ -698,10 +736,13 @@
         [tableView beginUpdates];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [tableView endUpdates];
+        
+        [self finishInputCoalSeamData];
     }
     // scroll
 //    [self scrollToFixCoalTable];
 }
+
 //-(CGSize)preferredContentSize
 //{
 //    [_tableViewCoalSeam layoutIfNeeded];
@@ -821,7 +862,6 @@
     _viewBarGraph.frame = frameBarGraph;
     // height
     CGFloat totalHeight = frameBarGraph.size.height - 2*GAP_BAR_GRAPH_HEADER;
-    
 //    CGFloat totalHeight = HEIGHT_BAR_GRAPH;
     
     CGFloat heightUnit = [self filterMinUnitIterm:totalCoalSeamAray totalHeight:totalHeight sumMeter:sumMeter];
@@ -866,7 +906,8 @@
             CGRect nameLineFrame = CGRectMake(0, height - 3, subWidth, 1);
             UILabel *nameLine = [[UILabel alloc] initWithFrame:nameLineFrame];
             [nameLine setBackgroundColor:[[UIColor grayColor] colorWithAlphaComponent:0.5]];
-            [nameLabel addSubview:nameLine];
+            // TODO: add name line label
+//            [nameLabel addSubview:nameLine];
             
             // meter label
             CGRect meterLabelFrame = CGRectMake(xgap + subWidth/2.f, sumY, subWidth/2.f, height);

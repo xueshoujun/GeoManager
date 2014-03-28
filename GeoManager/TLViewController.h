@@ -15,6 +15,7 @@
                                             TLLoginViewControllerDelegate,TLServiceRequestStartDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *labelTitle;
+@property (weak, nonatomic) IBOutlet UIButton *buttonRefresh;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSDictionary *loginTeamDict;

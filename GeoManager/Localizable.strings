@@ -16,7 +16,9 @@
 "alertNotInputPassword" = "请输入口令";
 "alertLoading" = "正在发送请求，请稍后";
 "alertLoginFail" = "登录失败，请联系管理员。(%d)";
+"alertLoginFail_Password" = "口令错误，请重新输入。";
 "alertConfigWrong" = "配置信息取得错误，请联系管理员。(%@)";
+"alertInputCoalSeamFirst" = "请先输入相应的煤岩层类别。";
 "submitInfoWrong" = "提交信息有误。(%@)";
 "submitInfoNull" = "请提交完整信息。(%@)";
 "alertSubmitFailed" = "提交失败。(%d)";
