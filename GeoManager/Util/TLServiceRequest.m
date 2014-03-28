@@ -39,9 +39,10 @@
         NSLog(@"group request failure URL : %@", operation.request.URL.absoluteString);
         NSLog(@"group request failure error : %@", error.debugDescription);
         // 返回失败的结果
-        NSString *errorMessage = [NSString stringWithFormat:NSLocalizedString(@"alertNotGetGroup", nil), error.code];
+        NSString *errorMessage = [NSString stringWithFormat:NSLocalizedString(@"alertNotGetGroup", nil), operation.response.statusCode];
         NSDictionary *resultDict = @{K_REQUEST_RESULT: K_REQUEST_RESULT_FAILURE, K_REQUEST_RESULT_MESSAGE: errorMessage};
-
+        //TODO:MOCK Test
+//        NSDictionary *resultDict = [self groupMockResponse];
         if (_startDelegate && [_startDelegate respondsToSelector:@selector(groupResponse:)]) {
             [_startDelegate groupResponse:resultDict];
         }
@@ -107,7 +108,9 @@
         if (401 == operation.response.statusCode) {
             message = NSLocalizedString(@"alertLoginFail_Password", Nil);
         }
+        
         NSDictionary *resultDict = @{K_REQUEST_RESULT: K_REQUEST_RESULT_FAILURE, K_REQUEST_RESULT_MESSAGE: message};
+        // TODO: MOCK for TEST
 //        NSDictionary *resultDict = [self loginMockResponse];
         // 回调返回结果
         if (_loginDelegate && [_loginDelegate respondsToSelector:@selector(loginResponse:)]) {
@@ -169,7 +172,7 @@
     "\"message\":\"null\","
     "\"groups\":[{\"id\":\"11\","
                 "\"name\":\"综掘队\","
-                "\"members\":[{\"id\":12,\"name\":\"综掘一队\"},{\"id\":\"13\",\"name\":\"综掘二队\"}]},"
+                "\"members\":[{\"id\":1381,\"name\":\"综掘一队\"},{\"id\":\"1381\",\"name\":\"综掘二队\"}]},"
     
                 "{\"id\":\"21\","
                 "\"name\":\"开拓队\","

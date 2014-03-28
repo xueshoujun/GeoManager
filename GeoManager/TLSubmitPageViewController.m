@@ -223,6 +223,32 @@
     _submitDict[K_SURFACE_ID] = _selectedWorkingSuface[K_ID];
     
     //
+    if (_selectedWorkingSuface[K_TUNNELS] && [_selectedWorkingSuface[K_TUNNELS] count] > 0) {
+        [_textFieldTunnel setUserInteractionEnabled:YES];
+        self.selectedTunnel = _selectedWorkingSuface[K_TUNNELS][0];
+        _textFieldTunnel.text = _selectedTunnel[K_NAME];
+        _submitDict[K_TUNNEL_ID] = _selectedTunnel[K_ID];
+        
+        if (_selectedTunnel[K_OBSERVER_POINTS] &&
+            [_selectedTunnel[K_OBSERVER_POINTS] count] > 0) {
+            [_textFieldObserverPoint setUserInteractionEnabled:YES];
+            self.selectedPoint = _selectedTunnel[K_OBSERVER_POINTS][0];
+            _textFieldObserverPoint.text = _selectedPoint[K_NAME];
+            _submitDict[K_POINT_ID] = _selectedPoint[K_ID];
+        } else {
+            _textFieldObserverPoint.text = @"";
+            [_textFieldObserverPoint setUserInteractionEnabled:NO];
+            // 直接报错
+            [self checkConfigIterm:K_OBSERVER_POINTS];
+            
+        }
+    } else {
+        _textFieldTunnel.text = @"";
+        [_textFieldTunnel setUserInteractionEnabled:NO];
+        // 直接报错
+        [self checkConfigIterm:K_TUNNELS];
+    }
+    /*
     if ([self checkConfigIterm:K_TUNNELS]) {
         [_textFieldTunnel setUserInteractionEnabled:YES];
         self.selectedTunnel = _selectedWorkingSuface[K_TUNNELS][0];
@@ -232,6 +258,8 @@
         _textFieldTunnel.text = @"";
         [_textFieldTunnel setUserInteractionEnabled:NO];
     }
+     
+    
     //
     if ([self checkConfigIterm:K_OBSERVER_POINTS]) {
         [_textFieldObserverPoint setUserInteractionEnabled:YES];
@@ -242,6 +270,7 @@
         _textFieldObserverPoint.text = @"";
         [_textFieldObserverPoint setUserInteractionEnabled:NO];
     }
+     */
 
     // 观测点前 米
     _textFieldObsvMeter.text = @"";
@@ -495,7 +524,7 @@
                     _textFieldCoalSeamCell.text = @"";
                     [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_STRATUM_ID] = @"";
                     [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_NAME] = @"";
-                    [TLDataCenter shareInstance].coalSeamData[indexPath.section][indexPath.row][K_VALUE] = @"";
+                    [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_VALUE] = @"";
                     
                     // draw graph
                     [self finishInputCoalSeamData];
