@@ -219,9 +219,17 @@
 -(void) teamButtonAction:(UIButton *)button
 {
     self.loginTeamDict = Nil;
-    NSLog(@"i:%d,j:%d", button.tag/NUMBER_LINE_BUTTON, button.tag%NUMBER_LINE_BUTTON);
-    self.loginTeamDict = _tableDataArray[button.tag/NUMBER_LINE_BUTTON][button.tag%NUMBER_LINE_BUTTON];
+    // 算法有问题。。。
+    NSLog(@"tag : %d, i:%d,j:%d", button.tag, button.tag/NUMBER_LINE_BUTTON, button.tag%NUMBER_LINE_BUTTON);
+    NSInteger row = button.tag/NUMBER_LINE_BUTTON;
+    NSInteger colume = button.tag%NUMBER_LINE_BUTTON;
+    if (button.tag%NUMBER_LINE_BUTTON == 0 && 1 < NUMBER_LINE_BUTTON) {
+        row -= 1;
+        colume = NUMBER_LINE_BUTTON;
+    }
+    self.loginTeamDict = _tableDataArray[row][colume];
     [self performSegueWithIdentifier:@"PresentLoginView" sender:button];
+    NSLog(@"team title %@, team id %@", _loginTeamDict[K_NAME], _loginTeamDict[K_ID]);
     
 }
 

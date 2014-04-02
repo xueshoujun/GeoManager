@@ -87,6 +87,9 @@
     _tableViewCoalSeam.backgroundColor = [UIColor clearColor];
 
     [_labelBarGraphTitle setTextColor:COLOR_BLUE_TEXT];
+    
+    [_textFieldShift setMinimumFontSize:3.0];
+    [_textFieldShift setAdjustsFontSizeToFitWidth:YES];
     // Title init ==============
      /*
     _textFieldTitle.delegate = self;
@@ -157,7 +160,9 @@
 {
     if (textField == _textFieldTitle) {
         _submitDict[K_SURFACE_ID] = (_selectedWorkingSuface[K_ID]==nil?@"":_selectedWorkingSuface[K_ID]);
+        _textFieldTitle.text = _selectedWorkingSuface[K_NAME];
         
+        // tunnels is null
         if (_selectedWorkingSuface[K_TUNNELS] == nil ||
             [_selectedWorkingSuface[K_TUNNELS] isEqual:[NSNull null]]) {
             if (_selectedWorkingSuface[K_NAME]==nil ||
@@ -171,11 +176,20 @@
             _textFieldObserverPoint.text = @"";
             return;
         }
+        
         self.selectedTunnel = _selectedWorkingSuface[K_TUNNELS][0];
-        self.selectedPoint = _selectedTunnel[K_OBSERVER_POINTS][0];
-        _textFieldTitle.text = _selectedWorkingSuface[K_NAME];
         _textFieldTunnel.text = _selectedTunnel[K_NAME];
         _submitDict[K_TUNNEL_ID] = (_selectedTunnel[K_ID]==nil?@"":_selectedTunnel[K_ID]);
+        
+        // point info is null
+        if (_selectedTunnel[K_OBSERVER_POINTS] == nil ||
+            [_selectedTunnel[K_OBSERVER_POINTS] isEqual:[NSNull null]]) {
+        
+            _textFieldObserverPoint.text = @"";
+            return;
+        }
+
+        self.selectedPoint = _selectedTunnel[K_OBSERVER_POINTS][0];
         _submitDict[K_POINT_ID] = (_selectedPoint[K_ID]==nil?@"":_selectedPoint[K_ID]);
         _textFieldObserverPoint.text = _selectedPoint[K_NAME];
     } else if (textField == _textFieldTunnel) {
@@ -223,13 +237,16 @@
     _submitDict[K_SURFACE_ID] = _selectedWorkingSuface[K_ID];
     
     //
-    if (_selectedWorkingSuface[K_TUNNELS] && [_selectedWorkingSuface[K_TUNNELS] count] > 0) {
+    if (_selectedWorkingSuface[K_TUNNELS] &&
+        ![_selectedWorkingSuface[K_TUNNELS] isEqual:[NSNull null]] &&
+        [_selectedWorkingSuface[K_TUNNELS] count] > 0) {
         [_textFieldTunnel setUserInteractionEnabled:YES];
         self.selectedTunnel = _selectedWorkingSuface[K_TUNNELS][0];
         _textFieldTunnel.text = _selectedTunnel[K_NAME];
         _submitDict[K_TUNNEL_ID] = _selectedTunnel[K_ID];
         
         if (_selectedTunnel[K_OBSERVER_POINTS] &&
+            ![_selectedTunnel[K_OBSERVER_POINTS] isEqual:[NSNull null]] &&
             [_selectedTunnel[K_OBSERVER_POINTS] count] > 0) {
             [_textFieldObserverPoint setUserInteractionEnabled:YES];
             self.selectedPoint = _selectedTunnel[K_OBSERVER_POINTS][0];
