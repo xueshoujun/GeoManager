@@ -20,7 +20,7 @@
     NSURL *url = [NSURL URLWithString:URL_REQUEST_GROUP];
     AFHTTPClient *httpClinet = [AFHTTPClient clientWithBaseURL:url];
     [httpClinet setParameterEncoding:AFJSONParameterEncoding];
-    NSMutableURLRequest *urlRequest = [httpClinet requestWithMethod:@"GET" path:@"" parameters:groupRequest];
+    NSMutableURLRequest *urlRequest = [httpClinet requestWithMethod:@"GET" path:@"mgp/api.do?method=group" parameters:groupRequest];
     
     // AFHTTPRequest
     AFHTTPRequestOperation *httpRequest = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
@@ -74,21 +74,26 @@
     }else {
         teamId = [loginRequest[K_ID] stringValue];
     }
-    // TODO:test teamid = adming start
-//    teamId = @"admin";
-    // TODO:test teamid = adming end
-    NSDictionary *requestDict = @{K_TEAM_ID:teamId, K_PASSWORD:loginRequest[K_PASSWORD]};
+//    NSDictionary *requestDict = @{K_TEAM_ID:teamId, K_PASSWORD:loginRequest[K_PASSWORD]};
+    NSDictionary *requestDict = @{K_USER_NAME:teamId, K_PASSWORD:loginRequest[K_PASSWORD]};
     NSURL *url = [NSURL URLWithString:URL_REQUEST_LOGIN];
     AFHTTPClient *httpClinet = [AFHTTPClient clientWithBaseURL:url];
 //    [httpClinet setParameterEncoding:AFJSONParameterEncoding];
     // application/x-www-form-urlencoded
-    NSMutableURLRequest *urlRequest = [httpClinet requestWithMethod:@"POST" path:@"/mtp/team/login" parameters:requestDict];
+    NSMutableURLRequest *urlRequest = [httpClinet requestWithMethod:@"POST" path:@"mgp/api.do?method=login" parameters:requestDict];
     
     // AFHTTPRequest
     AFHTTPRequestOperation *httpRequest = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     [httpRequest setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         // 返回结果
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        // 失败
+        if (![resultDict[K_SUCCESS] integerValue]) {
+            NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alertLoginFail", nil), 301];
+            resultDict = @{K_REQUEST_RESULT: K_REQUEST_RESULT_FAILURE, K_REQUEST_RESULT_MESSAGE: message};
+        }
+        
         // 回调返回结果
         if (_loginDelegate && [_loginDelegate respondsToSelector:@selector(loginResponse:)]) {
             [_loginDelegate loginResponse:resultDict];
@@ -136,15 +141,22 @@
     // Authorization:{accessToken}
     [httpClinet setDefaultHeader:@"Authorization" value:[TLDataCenter shareInstance].accessToken];
     [httpClinet setParameterEncoding:AFJSONParameterEncoding];
-    NSMutableURLRequest *urlRequest = [httpClinet requestWithMethod:@"POST" path:@"" parameters:requestDict];
+    NSMutableURLRequest *urlRequest = [httpClinet requestWithMethod:@"POST" path:@"mgp/api.do?method=card" parameters:requestDict];
     AFHTTPRequestOperation *httpRequest = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     [httpRequest setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"requst hearder %@", operation.request.allHTTPHeaderFields);
         NSLog(@"requst string %@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-        NSLog(@"responseObject %@", responseObject);
+        NSDictionary *resultdict = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:Nil];
+        NSLog(@"submit resultdict %@", resultdict);
+        NSDictionary *failurDict = Nil;
+        // 失败
+        if (![resultdict[K_SUCCESS] integerValue]) {
+            NSString *message = [NSString stringWithFormat:NSLocalizedString(@"alertSubmitFailed", nil), operation.response.statusCode];
+            failurDict = @{K_REQUEST_RESULT: K_REQUEST_RESULT_FAILURE, K_REQUEST_RESULT_MESSAGE: message};
+        }
         
         if (_submitDelegate && [_submitDelegate respondsToSelector:@selector(submitGeoInfoResponse:)]) {
-            [_submitDelegate submitGeoInfoResponse:nil];
+            [_submitDelegate submitGeoInfoResponse:failurDict];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"loginRequest failure URL : %@", operation.request.URL.absoluteString);

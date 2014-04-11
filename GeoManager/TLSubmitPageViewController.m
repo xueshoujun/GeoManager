@@ -196,7 +196,8 @@
         
         _submitDict[K_TUNNEL_ID] = (_selectedTunnel[K_ID]==nil?@"":_selectedTunnel[K_ID]);
         if (_selectedTunnel[K_OBSERVER_POINTS] == nil ||
-            [_selectedTunnel[K_OBSERVER_POINTS] isEqual:[NSNull null]]) {
+            [_selectedTunnel[K_OBSERVER_POINTS] isEqual:[NSNull null]] ||
+            [_selectedTunnel[K_OBSERVER_POINTS] count] == 0) {
             _textFieldTunnel.text = _selectedTunnel[K_NAME];
             _textFieldObserverPoint.text = @"";
             return;
@@ -301,6 +302,7 @@
             if ([NSLocalizedString(@"coalSeamName", Nil) isEqualToString:stratum[K_NAME]]) {
                 [TLDataCenter shareInstance].coalSeamData[1][0][K_NAME] = stratum[K_NAME];
                 [TLDataCenter shareInstance].coalSeamData[1][0][K_STRATUM_ID] = stratum[K_ID];
+                [TLDataCenter shareInstance].coalSeamData[1][0][K_STRATUM_IMG] = stratum[K_STRATUM_IMG];
 //                [TLDataCenter shareInstance].coalSeamData[1][0] = [stratum mutableCopy];
 //                [_tunnelArray addObject:stratum];
             }
@@ -494,32 +496,32 @@
                 }
             } forKey:PROPERTY_SELECTED];
         }else if (sender == _textfieldRoofAnchor){
-            [segue.destinationViewController setValue:_configItemsDict[K_OBSERVER_INFO] forKey:PROPERTY_DATA_SOURCE];
-            [segue.destinationViewController setValue:infoNameDict[K_OBSERVER_INFO] forKey:PROPERTY_TITLE_NAME];
+            [segue.destinationViewController setValue:_configItemsDict[K_ROOF_ANCHOR_INFO] forKey:PROPERTY_DATA_SOURCE];
+            [segue.destinationViewController setValue:infoNameDict[K_ROOF_ANCHOR_INFO] forKey:PROPERTY_TITLE_NAME];
             [segue.destinationViewController setValue:^(NSIndexPath *indexPath){
-                if (![_submitDict[K_ROOF_ANCHOR] isEqual:_configItemsDict[K_OBSERVER_INFO][indexPath.row][K_ID]] ) {
-                    _textfieldRoofAnchor.text = _configItemsDict[K_OBSERVER_INFO][indexPath.row][K_NAME];
-                    _submitDict[K_ROOF_ANCHOR] = _configItemsDict[K_OBSERVER_INFO][indexPath.row][K_ID];
+                if (![_submitDict[K_ROOF_ANCHOR] isEqual:_configItemsDict[K_ROOF_ANCHOR_INFO][indexPath.row][K_ID]] ) {
+                    _textfieldRoofAnchor.text = _configItemsDict[K_ROOF_ANCHOR_INFO][indexPath.row][K_NAME];
+                    _submitDict[K_ROOF_ANCHOR] = _configItemsDict[K_ROOF_ANCHOR_INFO][indexPath.row][K_ID];
                     
                 }
             } forKey:PROPERTY_SELECTED];
         }else if (sender == _textFieldAheadHole){
-                [segue.destinationViewController setValue:_configItemsDict[K_OBSERVER_INFO] forKey:PROPERTY_DATA_SOURCE];
-                [segue.destinationViewController setValue:infoNameDict[K_OBSERVER_INFO] forKey:PROPERTY_TITLE_NAME];
+                [segue.destinationViewController setValue:_configItemsDict[K_AHEAD_HOLE_INFO] forKey:PROPERTY_DATA_SOURCE];
+                [segue.destinationViewController setValue:infoNameDict[K_AHEAD_HOLE_INFO] forKey:PROPERTY_TITLE_NAME];
                 [segue.destinationViewController setValue:^(NSIndexPath *indexPath){
-                    if (![_submitDict[K_AHEAD_HOLE] isEqual:_configItemsDict[K_OBSERVER_INFO][indexPath.row][K_ID]] ) {
-                        _textFieldAheadHole.text = _configItemsDict[K_OBSERVER_INFO][indexPath.row][K_NAME];
-                        _submitDict[K_AHEAD_HOLE] = _configItemsDict[K_OBSERVER_INFO][indexPath.row][K_ID];
+                    if (![_submitDict[K_AHEAD_HOLE] isEqual:_configItemsDict[K_AHEAD_HOLE_INFO][indexPath.row][K_ID]] ) {
+                        _textFieldAheadHole.text = _configItemsDict[K_AHEAD_HOLE_INFO][indexPath.row][K_NAME];
+                        _submitDict[K_AHEAD_HOLE] = _configItemsDict[K_AHEAD_HOLE_INFO][indexPath.row][K_ID];
                         
                     }
                 } forKey:PROPERTY_SELECTED];
         }else if (sender == _textFieldTunnelInfo){
-            [segue.destinationViewController setValue:_configItemsDict[K_OBSERVER_INFO] forKey:PROPERTY_DATA_SOURCE];
-            [segue.destinationViewController setValue:infoNameDict[K_OBSERVER_INFO] forKey:PROPERTY_TITLE_NAME];
+            [segue.destinationViewController setValue:_configItemsDict[K_TUNNEL_INFO_INFO] forKey:PROPERTY_DATA_SOURCE];
+            [segue.destinationViewController setValue:infoNameDict[K_TUNNEL_INFO_INFO] forKey:PROPERTY_TITLE_NAME];
             [segue.destinationViewController setValue:^(NSIndexPath *indexPath){
-                if (![_submitDict[K_TUNNEL_INFO] isEqual:_configItemsDict[K_OBSERVER_INFO][indexPath.row][K_ID]] ) {
-                    _textFieldTunnelInfo.text = _configItemsDict[K_OBSERVER_INFO][indexPath.row][K_NAME];
-                    _submitDict[K_TUNNEL_INFO] = _configItemsDict[K_OBSERVER_INFO][indexPath.row][K_ID];
+                if (![_submitDict[K_TUNNEL_INFO] isEqual:_configItemsDict[K_TUNNEL_INFO_INFO][indexPath.row][K_ID]] ) {
+                    _textFieldTunnelInfo.text = _configItemsDict[K_TUNNEL_INFO_INFO][indexPath.row][K_NAME];
+                    _submitDict[K_TUNNEL_INFO] = _configItemsDict[K_TUNNEL_INFO_INFO][indexPath.row][K_ID];
                     
                 }
             } forKey:PROPERTY_SELECTED];
@@ -550,6 +552,7 @@
                     if (_textFieldCoalSeamCell !=nil && _selectedIndexPath !=nil) {
                         _textFieldCoalSeamCell.text = _configItemsDict[K_STRATUMS][indexPath.row][K_NAME];
                         [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_STRATUM_ID] = _configItemsDict[K_STRATUMS][indexPath.row][K_ID];
+                        [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_STRATUM_IMG] = _configItemsDict[K_STRATUMS][indexPath.row][K_STRATUM_IMG];
                         [TLDataCenter shareInstance].coalSeamData[_selectedIndexPath.section][_selectedIndexPath.row][K_NAME] = _configItemsDict[K_STRATUMS][indexPath.row][K_NAME];
                         // draw graph
                         [self finishInputCoalSeamData];
@@ -935,12 +938,15 @@
                 height = (height >= MIN_METER_VALUE?height:MIN_METER_VALUE);
             }
             CGRect frame = CGRectMake(xgap + subWidth, sumY, subWidth, height);
-            NSString *imageName = @"";
-            if ([dict[K_STRATUM_ID] isKindOfClass:[NSString class]]) {
-                imageName = dict[K_STRATUM_ID];
-            }else {
-                imageName = [dict[K_STRATUM_ID] stringValue];
-            }
+            NSString *imageName = dict[K_STRATUM_IMG];
+            NSLog(@"IMAGE NAME %@", imageName);
+            
+//            if ([dict[K_STRATUM_ID] isKindOfClass:[NSString class]]) {
+//                imageName = dict[K_STRATUM_ID];
+//            }else {
+//                imageName = [dict[K_STRATUM_ID] stringValue];
+//            }
+            
             UIImageView *imageCoal = [[UIImageView alloc] initWithFrame:frame];
             [imageCoal setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:imageName]]];
             // name label

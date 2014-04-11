@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#define URL_REQUEST_GROUP   @"http://112.124.102.24:8080/mtp/team"
-#define URL_REQUEST_LOGIN   @"http://112.124.102.24:8080/mtp/team/login"
-//#define URL_REQUEST_LOGIN   @"http://112.124.102.24:8080/mtp/form/conf"
-#define URL_REQUEST_SUBMIT  @"http://112.124.102.24:8080/mtp/form/save"
+#define URL_REQUEST_GROUP   @"http://112.124.102.24:8080"
+#define URL_REQUEST_LOGIN   @"http://112.124.102.24:8080"
+#define URL_REQUEST_SUBMIT  @"http://112.124.102.24:8080"
+//#define URL_REQUEST_GROUP   @"http://112.124.102.24:8080/mtp/team"
+//#define URL_REQUEST_LOGIN   @"http://112.124.102.24:8080/mtp/team/login"
+//#define URL_REQUEST_SUBMIT  @"http://112.124.102.24:8080/mtp/form/save"
 
 #define URL_NOTIFICATION    @"http://f.hiphotos.baidu.com/image/w%3D2048/sign=26022338a38b87d65042ac1f33302838/6c224f4a20a446239ce9346b9a22720e0cf3d79c.jpg"
 
@@ -19,9 +20,10 @@
 #define K_ID        @"id"
 #define K_TEAMS     @"teams"
 #define K_VALUE     @"value"
+#define K_USER_NAME  @"username"
 #define K_PASSWORD  @"password"
 #define K_ACCESS_TOKEN      @"accessToken"
-
+#define K_SUCCESS       @"success"
 
 #define K_GROUPS            @"groups"
 #define K_SERVER_TIME       @"serverTime"
@@ -45,7 +47,14 @@
 #define K_ROOF_ARRAY        @"roof"
 #define K_TUNNEL_ARRAY      @"tunnel"
 #define K_FLOOR_ARRAY       @"floor"
+
 #define K_STRATUM_ID        @"stratumId"
+#define K_STRATUM_IMG        @"img"
+
+#define K_ROOF_ANCHOR_INFO      @"info1s"
+#define K_AHEAD_HOLE_INFO       @"info2s"
+#define K_TUNNEL_INFO_INFO      @"info3s"
+
 #define K_VALUE             @"value"
 #define K_ROOF_ANCHOR       @"roofAnchor"
 #define K_AHEAD_HOLE        @"aheadHole"
